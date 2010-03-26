@@ -1,0 +1,49 @@
+from solver.DAESolver import DAESolver
+'''
+Differential functions:
+y'_{diff}[0] = y_{diff}[1]
+
+y'_{diff}[1] = -y_{diff}[0] * y_{alge}[2]
+
+y'_{alge}[0] = 2.0 * y_{diff}[0] * y_{diff}[1]
+             + 2.0 * y_{alge}[0] * y_{alge}[1]
+
+Algebraic functions:
+y'_{alge}[1] = y_{alge}[1] * y_{alge}[1] 
+             + y_{diff}[1] * y_{diff}[1] 
+             - y_{alge}[2] - y_{alge}[0]
+
+y'_{alge}[2] =  y_{diff}[0] * y_{diff}[0] 
+             + y_{alge}[0] * y_{alge}[0] - 1.0
+'''
+
+def func_diff0(arr_diff, arr_alge, time):
+    return arr_diff[1]
+
+def func_diff1(arr_diff, arr_alge, time):
+    return -arr_diff[0] * arr_alge[2]
+
+def func_alge0(arr_diff, arr_alge, time):
+    return 2.0 * arr_diff[0] * arr_diff[1] + 2.0 * arr_alge[0] * arr_alge[1]
+
+def func_alge1(arr_diff, arr_alge, time):
+    return arr_alge[1] * arr_alge[1] + arr_diff[1] * arr_diff[1] - arr_alge[2] - arr_alge[0]
+
+def func_alge2(arr_diff, arr_alge, time):
+    return arr_diff[0] * arr_diff[0] + arr_alge[0] * arr_alge[0] - 1.0
+
+functions = [func_diff0, func_diff1, func_alge0, func_alge1, func_alge2]
+variables_differential = [0.0, 1.0]
+variables_algebraic = [-1.0, 0.0, 2.0]
+
+the_solver = DAESolver()
+initialize(the_solver, functions, variables_differential, variables_algebraic)
+
+step();
+step( 2 );
+run( 1.0 );
+
+output_series = get_logged_data()
+for output in output_series:
+    print output
+

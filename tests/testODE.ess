@@ -1,0 +1,35 @@
+from model.model import Model
+from solver.ODESolver import ODESolver
+'''
+S1 + S2 -> P, k = 0.1
+P -> S2, k = 0.3
+
+Volume: 1e-18
+
+Initial values:
+S1 = 10000.0
+S2 = 5000.0
+P = 10.0
+'''
+
+m = Model()
+S1 = m.new_species_type(name='S1')
+S2 = m.new_species_type(name='S2')
+P = m.new_species_type(name='P')
+
+rules = m.network_rules
+rules.add([S1, S2], [P], k=.1)
+rules.add([P], [S2], k=.3)
+
+variables = [10000., 5000., 10.]
+
+volume = 1e-18
+functions = make_functions(m, volume)
+the_solver = ODESolver()
+initialize(the_solver, functions, variables)
+
+step(10)
+
+output_series = get_logged_data()
+print output_series
+
