@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include "Defs.hpp"
 #include "Function.hpp"
@@ -73,8 +74,8 @@ public:
     void get_variable_array(Real variable_array[], 
         const Integer a_variable_array_size) const
     {
-        memcpy(variable_array, &the_value_[0], 
-            a_variable_array_size * sizeof(Real));
+        std::copy(the_value_.begin(), the_value_.begin() + a_variable_array_size,
+                  variable_array);
     }
 
     void initialize_solver(const Integer a_variable_array_size);

@@ -166,15 +166,16 @@ void DAESolver::initialize(Real variable_array_differential[],
     const Integer a_variable_array_size_differential)
 {
     the_value_differential_.resize(a_variable_array_size_differential);
-    memcpy(&the_value_differential_[0], variable_array_differential, 
-        a_variable_array_size_differential * sizeof(Real));
+    std::copy(variable_array_differential,
+              variable_array_differential + a_variable_array_size_differential,
+              the_value_differential_.begin());
     the_value_differential_buffer_ = the_value_differential_;
 
     const VariableArray::size_type n_algebraic(
         a_variable_array_size - a_variable_array_size_differential);
     the_value_algebraic_.resize(n_algebraic);
-    memcpy(&the_value_algebraic_[0], variable_array_algebraic, 
-        n_algebraic * sizeof(Real));
+    std::copy(variable_array_algebraic, variable_array_algebraic + n_algebraic,
+              the_value_algebraic_.begin());
     the_value_algebraic_buffer_ = the_value_algebraic_;
 
     the_last_time_ = the_current_time_;

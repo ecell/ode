@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include "Defs.hpp"
 #include "Function.hpp"
@@ -81,8 +82,9 @@ public:
     void get_variable_differential_array(Real variables[],
         const Integer a_variable_array_size) const
     {
-        memcpy(variables, &the_value_differential_[0],
-            a_variable_array_size * sizeof(Real));
+        std::copy(the_value_differential_.begin(),
+                  the_value_differential_.begin() + a_variable_array_size,
+                  variables);
     }
 
     /** Get variables of algebraic
@@ -90,8 +92,9 @@ public:
     void get_variable_algebraic_array(Real variables[],
         const Integer a_variable_array_size) const
     {
-        memcpy(variables, &the_value_algebraic_[0],
-            a_variable_array_size * sizeof(Real));
+        std::copy(the_value_algebraic_.begin(),
+                  the_value_algebraic_.begin() + a_variable_array_size,
+                  variables);
     }
 
     virtual Integer update_internal_state(Real a_step_interval);
