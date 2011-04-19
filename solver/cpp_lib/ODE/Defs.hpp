@@ -5,6 +5,7 @@
 #include <boost/smart_ptr.hpp>
 
 #include <vector>
+#include <limits>
 
 /**
     Declare a new type and its pointer,
